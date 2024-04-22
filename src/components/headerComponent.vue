@@ -1,10 +1,12 @@
 <template>
   <div id="header-container">
-    <div>
+    <div id="logo-container">
       <a href="" id="logo">FPLink</a>
     </div>
     <nav>
       <ul>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/about">About</router-link></li>
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
       </ul>
@@ -25,8 +27,13 @@
   background-color: var(--lightGreen);
 }
 
+#logo-container{
+  margin-top: 20px;
+}
+
 nav {
   padding: 10px;
+  margin-top: 10px;
 }
 
 ul {
@@ -43,6 +50,8 @@ li {
 a {
   color: var(--black);
   text-decoration: none;
+  font-family: Montserrat;
+  font-weight: 600;
 }
 
 a:hover {

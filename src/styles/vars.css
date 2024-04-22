@@ -7,7 +7,9 @@
     --black: #1f1f1f;
     
     /*Fonts*/
-
+    --menu: Montserrat;
+    --header: Poppins;
 
     /*Shadows*/
+    --imgShadow: 0px 0px 12px rgba(0, 0, 0, 0.35);
   }
