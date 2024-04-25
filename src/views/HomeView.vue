@@ -95,9 +95,15 @@
       </div>
     </div>
     <div id="block5">
-      
+      <div id="b5-content">
+        <h3>Maximiza tu Formación Profesional</h3>
+        <p>No pierdas la oportunidad de potenciar tu aprendizaje. Regístrate ahora y encuentra tu lugar en el mundo
+          laboral.</p>
+        <button>Comienza ya</button>
+      </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <style scoped lang="scss">
@@ -375,10 +381,13 @@
       flex-direction: column;
       gap: 15px;
       align-items: start;
-      h2, p{
+
+      h2,
+      p {
         font-family: Poppins;
       }
-      p{
+
+      p {
         text-align: left;
       }
     }
@@ -394,19 +403,66 @@
       display: flex;
       flex-direction: column;
       gap: 40px;
-      .b4-subblock{
+
+      .b4-subblock {
         display: flex;
         flex-direction: column;
         gap: 12px;
         justify-content: left;
         align-items: start;
-        h3, p{
+
+        h3,
+        p {
           font-family: Poppins;
         }
-        p{
+
+        p {
           text-align: left;
         }
       }
+    }
+  }
+}
+
+#block5 {
+  background-color: var(--black);
+  background-image: url("@/assets/pexels-fauxels-3182781.jpeg");
+  background-size: 750px;
+  background-repeat: no-repeat;
+  background-position: 90%;
+  min-height: 300px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  #b5-content {
+    position: absolute;
+    left: 10%;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 15px;
+
+    h3,
+    p {
+      font-family: Poppins;
+      color: var(--white);
+      text-align: left;
+    }
+
+    button {
+      font-family: Poppins;
+      font-weight: 600;
+      text-align: center;
+      background-color: var(--miscGreen);
+      color: var(--white);
+      border-radius: 10px;
+      border: none;
+      width: fit-content;
+      padding: 8px 22px 8px 22px;
     }
   }
 }
@@ -425,7 +481,12 @@ a:hover {
 </style>
 
 <script>
+import Footer from "@/components/footerComponent.vue";
+
 export default {
-  name: "HomeView"
+  name: "HomeView",
+  components: {
+    Footer
+  }
 };
 </script>
