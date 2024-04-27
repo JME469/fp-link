@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import StudentLogin from "@/views/StudentLogin.vue";
 import CompanyLogin from "@/views/CompanyLogin.vue";
+import FeedView from "@/views/FeedView.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/empresas",
     name: "empresas",
     component: CompanyLogin, 
+  },
+  {
+    path: "/feed",
+    name: "feed",
+    component: FeedView, 
   },
 ];
 
