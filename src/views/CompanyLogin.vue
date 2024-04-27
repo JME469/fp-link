@@ -2,7 +2,7 @@
     <div class="login-container">
         <form @submit.prevent="login" class="login-form" v-show="showLogin">
             <h1>FPLink</h1>
-            <h4>- Estudiantes -</h4>
+            <h4>- Empresas -</h4>
             <h2>Inicia sesión</h2>
             <div class="form-group">
                 <label for="email">Correo electrónico:</label>
@@ -19,7 +19,7 @@
         </form>
         <form @submit.prevent="create" class="login-form" v-show="showCreate">
             <h1>FPLink</h1>
-            <h4>- Estudiantes -</h4>
+            <h4>- Empresas -</h4>
             <h2>Crea una cuenta</h2>
             <div class="form-group">
                 <label for="email">Correo electrónico:</label>
