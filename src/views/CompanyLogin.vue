@@ -132,7 +132,7 @@
 
 <script>
 export default {
-    name: 'StudentLogin',
+    name: 'CompanyLogin',
     data() {
         return {
             email: '',

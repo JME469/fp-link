@@ -4,6 +4,7 @@ import AboutView from "@/views/AboutView.vue";
 import StudentLogin from "@/views/StudentLogin.vue";
 import CompanyLogin from "@/views/CompanyLogin.vue";
 import FeedView from "@/views/FeedView.vue";
+import ContactView from "@/views/ContactView.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/feed",
     name: "feed",
     component: FeedView, 
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: ContactView, 
   },
 ];
 
