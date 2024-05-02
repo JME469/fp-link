@@ -7,7 +7,7 @@
         </div>
       </router-link>
       <nav id="nav-container">
-        <ul class="nav">
+        <ul class="nav" :class="{ 'nav-open': isNavOpen }">
           <li><router-link to="/">Inicio</router-link></li>
           <li><router-link to="/estudiantes">Estudiantes</router-link></li>
           <li><router-link to="/empresas">Empresas</router-link></li>
@@ -37,96 +37,95 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 
-    #logo {
-      font-family: Syne;
-      font-weight: 800;
-      letter-spacing: 1px;
-      font-size: larger;
+    .logo-container{
       text-decoration: none;
-      color: var(--black);
+      #logo {
+        font-family: Syne;
+        font-weight: 800;
+        letter-spacing: 1px;
+        font-size: larger;
+        text-decoration: none;
+        color: var(--black);
+      }
     }
-  }
-
-  #nav-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    .nav {
+    #nav-container {
       display: flex;
       flex-direction: row;
-      gap: 30px;
       align-items: center;
       justify-content: center;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-
-      li {
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        a {
-          @include navItem;
-
-          &:hover {
-            text-decoration: underline;
+  
+      .nav {
+        display: flex;
+        flex-direction: row;
+        gap: 55px;
+        align-items: center;
+        justify-content: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+  
+        li {
+  
+          &:last-child {
+            margin-right: 0;
+          }
+  
+          a {
+            @include navItem;
+            text-decoration: none;
+  
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
-
-
       .menu-toggle {
         display: none;
+        border: none;
         /* Hide by default */
-
+  
         span {
           display: block;
           width: 25px;
           height: 3px;
-          background-color: #fff;
+          background-color: var(--black);
           margin-bottom: 5px;
         }
       }
     }
   }
+}
+@media screen and (max-width: 600px) {
+  .nav {
+    display: none;
+    /* Hide nav by default */
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 10px;
+ 
+    .nav-open {
+      display: flex;
+      /* Show nav when isNavOpen is true */
+    }
+  }
+  .menu-toggle {
+    display: block;
+    /* Show menu toggle button */
+    cursor: pointer;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
 
-  /* Media query for mobile */
-  @media (max-width: 768px) {
-    nav {
-      display: none;
-      /* Hide nav by default */
-      flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      padding-top: 10px;
-      background-color: #333;
-
-      &.nav-open {
-        display: flex;
-        /* Show nav when isNavOpen is true */
-      }
-
-      .menu-toggle {
-        display: block;
-        /* Show menu toggle button */
-        cursor: pointer;
-        padding: 10px;
-        background-color: transparent;
-        border: none;
-
-        span {
-          display: block;
-          width: 25px;
-          height: 3px;
-          background-color: #fff;
-          margin-bottom: 5px;
-        }
-      }
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--black);
+      margin-bottom: 5px;
     }
   }
 }
