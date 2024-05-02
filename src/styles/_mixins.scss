@@ -9,3 +9,12 @@
   width: fit-content;
   padding: 8px 22px 8px 22px;
 }
+
+@mixin navItem(){
+  color: var(--black);
+  text-decoration: none;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 15px;
+}
+

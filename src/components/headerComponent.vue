@@ -1,15 +1,17 @@
 <template>
   <header class="header">
     <div class="container">
-      <router-link to="/" class="logo">
-        <img src="@/assets/logo.png" alt="Logo">
+      <router-link to="/" class="logo-container">
+        <div id="logo">
+          FPLink
+        </div>
       </router-link>
-      <nav :class="{ 'nav-open': isNavOpen }">
-        <ul>
+      <nav id="nav-container">
+        <ul class="nav">
           <li><router-link to="/">Inicio</router-link></li>
           <li><router-link to="/estudiantes">Estudiantes</router-link></li>
           <li><router-link to="/empresas">Empresas</router-link></li>
-          <li><router-link to="/about">Acerca de</router-link></li>
+          <!--<li><router-link to="/about">Acerca de</router-link></li>-->
           <li><router-link to="/contact">Contacto</router-link></li>
         </ul>
         <button class="menu-toggle" @click="toggleNav">
@@ -23,57 +25,72 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/vars.css';
+@import '@/styles/_mixins.scss';
+
 .header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 0;
+  background-color: var(--lightGreen);
+  color: var(--black);
+  padding: 20px 0;
 
   .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
-    .logo img {
-      width: 100px; /* Adjust the width as needed */
+    #logo {
+      font-family: Syne;
+      font-weight: 800;
+      letter-spacing: 1px;
+      font-size: larger;
+      text-decoration: none;
+      color: var(--black);
     }
   }
 
-  nav {
+  #nav-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
 
-    ul {
+    .nav {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
       list-style-type: none;
       margin: 0;
       padding: 0;
 
       li {
-        margin-right: 20px;
 
         &:last-child {
           margin-right: 0;
         }
 
         a {
-          color: #fff;
-          text-decoration: none;
+          @include navItem;
 
           &:hover {
             text-decoration: underline;
           }
         }
       }
-    }
 
-    .menu-toggle {
-      display: none; /* Hide by default */
 
-      span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #fff;
-        margin-bottom: 5px;
+      .menu-toggle {
+        display: none;
+        /* Hide by default */
+
+        span {
+          display: block;
+          width: 25px;
+          height: 3px;
+          background-color: #fff;
+          margin-bottom: 5px;
+        }
       }
     }
   }
@@ -81,7 +98,8 @@
   /* Media query for mobile */
   @media (max-width: 768px) {
     nav {
-      display: none; /* Hide nav by default */
+      display: none;
+      /* Hide nav by default */
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
@@ -89,11 +107,13 @@
       background-color: #333;
 
       &.nav-open {
-        display: flex; /* Show nav when isNavOpen is true */
+        display: flex;
+        /* Show nav when isNavOpen is true */
       }
 
       .menu-toggle {
-        display: block; /* Show menu toggle button */
+        display: block;
+        /* Show menu toggle button */
         cursor: pointer;
         padding: 10px;
         background-color: transparent;

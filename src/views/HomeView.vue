@@ -108,6 +108,7 @@
 
 <style scoped lang="scss">
 @import '@/styles/vars.css';
+@import '@/styles/_mixins.scss';
 
 #page-container {
   display: flex;
@@ -468,11 +469,7 @@
 }
 
 a {
-  color: var(--black);
-  text-decoration: none;
-  font-family: Montserrat;
-  font-weight: 600;
-  font-size: 15px;
+  @include navItem;
 }
 
 a:hover {
