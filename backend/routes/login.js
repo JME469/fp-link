@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('/fp-link/backend/models/User');
+const Estudiante = require('../models/Estudiante');
 const router = express.Router();
 
 
@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         }
 
         // Check if user exists
-        const user = await User.findOne({ where: { email } });
+        const user = await Estudiante.findOne({ where: { email } });
         if (!user) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }

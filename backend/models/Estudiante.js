@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../config/database.js');
 
-const User = sequelize.define('User', {
-    username: {
+const Estudiante = sequelize.define('estudiante', {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -15,15 +15,18 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    profilePic: {
+    profile_pic: {
         type: DataTypes.STRING
     },
-    studiesCenter: {
+    studies_center: {
         type: DataTypes.STRING
     },
     presentation: {
         type: DataTypes.TEXT
     }
+}, {
+    tableName: 'estudiantes',
+    timestamps: false,
 });
 
-module.exports = User;
+module.exports = Estudiante;

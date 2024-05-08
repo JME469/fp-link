@@ -26,15 +26,15 @@
       <h2>Crea una cuenta</h2>
       <div class="form-group">
         <label for="email">Correo electrónico:</label>
-        <input type="email" id="r-email" v-model="email" required />
+        <input type="email" id="r-email" v-model="rEmail" required />
       </div>
       <div class="form-group">
-        <label for="username">Nombre de usuario:</label>
-        <input type="text" id="username" v-model="username" required />
+        <label for="name">Nombre de usuario:</label>
+        <input type="text" id="name" v-model="name" required />
       </div>
       <div class="form-group">
         <label for="password">Contraseña:</label>
-        <input type="password" id="r-password" v-model="password" required />
+        <input type="password" id="r-password" v-model="rPassword" required />
       </div>
       <button type="submit">Crear</button>
       <p v-if="error" class="error">{{ error }}</p>
@@ -155,7 +155,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.username && this.password) {
+      if (this.name && this.password) {
         // Clear any previous errors
         this.error = "";
         // Redirect user to dashboard or home page upon successful login
@@ -166,13 +166,13 @@ export default {
     },
     async registerUser() {
       try {
-        const response = await fetch('/fp-link/backend/routes/register', {
+        const response = await fetch('http://localhost:3000/routes/register', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: this.username,
+            name: this.name,
             email: this.rEmail,
             password: this.rPassword,
           }),
