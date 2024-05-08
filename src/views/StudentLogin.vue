@@ -166,7 +166,7 @@ export default {
     },
     async registerUser() {
       try {
-        const response = await fetch("http://localhost:3000/routes/register", {
+        const response = await fetch('/fp-link/backend/routes/register', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

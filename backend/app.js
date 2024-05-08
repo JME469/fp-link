@@ -10,18 +10,18 @@ app.use(cors({
 
 app.options('*', cors());
 
-const registerRoute = require('./routes/register.js');
-const loginRoute = require('./routes/login');
-const logoutRoute = require('./routes/logout');
+const registerRoute = require('/fp-link/backend/routes/register');
+const loginRoute = require('/fp-link/backend/routes/login');
+const logoutRoute = require('/fp-link/backend/routes/logout');
 
-const { authenticateUser } = require('./middlewares/authMiddleware');
+const { authenticateUser } = require('/fp-link/backend/middlewares/authMiddleware');
 
 app.use(express.json());
 
 // Routes
-app.use('/api/register', registerRoute);
-app.use('/api/login', loginRoute);
-app.use('/api/logout', authenticateUser, logoutRoute);
+app.use('/fp-link/backend/routes/register', registerRoute);
+app.use('/fp-link/backend/routes/login', loginRoute);
+app.use('/fp-link/backend/routes/logout', authenticateUser, logoutRoute);
 
 // Start the server
 app.listen(PORT, () => {
