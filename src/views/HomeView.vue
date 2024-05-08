@@ -10,7 +10,6 @@
             <li><router-link to="/">Inicio</router-link></li>
             <li><router-link to="/estudiantes">Estudiantes</router-link></li>
             <li><router-link to="/empresas">Empresas</router-link></li>
-            <li><router-link to="/about">Acerca de</router-link></li>
             <li><router-link to="/contact">Contacto</router-link></li>
           </ul>
         </nav>
