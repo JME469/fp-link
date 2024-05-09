@@ -154,13 +154,31 @@ export default {
     };
   },
   methods: {
-    login() {
-      if (this.name && this.password) {
-        // Clear any previous errors
-        this.error = "";
+    async login() {
+      try {
+        const response = await fetch('http://localhost:3000/routes/login', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: this.lEmail, // Send email from input field
+            password: this.lPassword, // Send password from input field
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error);
+        }
+
+        const data = await response.json();
+        console.log(data);
         // Redirect user to dashboard or home page upon successful login
-        this.$router.push("/dashboard");
-      } else {
+        this.$router.push("/FeedView");
+      } catch (error) {
+        console.error(error.message);
+        // Display error message to the user
         this.error = "Correo electrónico o contraseña incorrectos";
       }
     },
@@ -185,8 +203,9 @@ export default {
 
         const data = await response.json();
         console.log(data);
-        this.$router.push("@/views/FeedView.vue");
+        this.$router.push("/FeedView");
         // Redirect to login page or display success message
+        console.log("Login successful");
       } catch (error) {
         console.error(error.message);
         // Display error message to the user

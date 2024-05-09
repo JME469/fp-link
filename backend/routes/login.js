@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const Estudiante = require('../models/Estudiante');
 const router = express.Router();
 
-
 router.post('/', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -27,7 +26,7 @@ router.post('/', async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: user.id }, 'your-secret-key', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
         // Send success response with token
         res.status(200).json({ message: 'Login successful', token });
@@ -38,4 +37,5 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
 
