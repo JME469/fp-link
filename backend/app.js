@@ -17,6 +17,7 @@ app.options('*', cors());
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
+const companiesRoute = require('./routes/companies');
 
 const { authenticateUser } = require('./middlewares/authMiddleware');
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/routes/register', registerRoute);
 app.use('/routes/login', loginRoute);
 app.use('/routes/logout', authenticateUser, logoutRoute);
+app.use('/routes/companies', companiesRoute);
 
 // Start the server
 app.listen(PORT, () => {
