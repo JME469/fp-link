@@ -18,6 +18,7 @@ const registerRoute = require('./routes/sRegister');
 const loginRoute = require('./routes/sLogin');
 const logoutRoute = require('./routes/logout');
 const companiesRoute = require('./routes/empresas');
+const uploadsRoute = require('./routes/uploads');
 
 const { authenticateUser } = require('./middlewares/authMiddleware');
 
@@ -28,6 +29,7 @@ app.use('/routes/sRegister', registerRoute);
 app.use('/routes/sLogin', loginRoute);
 app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
+app.use('/routes/uploads');
 
 // Start the server
 app.listen(PORT, () => {

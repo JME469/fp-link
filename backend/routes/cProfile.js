@@ -3,13 +3,24 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { Empresa } = require('../models/Empresa');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
+
 // Fetch company profile data
 router.get('/', async (req, res) => {
   try {
     // Fetch company data from the database
     const companyData = await Empresa.findOne({ where: { id: req.user.id } });
     // Send the company data as JSON response
-    res.json(companyData);
+    res.json({companyData, profilePicFilename: companyData.profilePic});
   } catch (error) {
     console.error('Error fetching company data:', error);
     // Send an error response if fetching data fails
@@ -45,6 +56,12 @@ router.put('/', async (req, res) => {
     // Send an error response if updating data fails
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// Route to serve the profile picture
+router.get('/uploads/:filename', (req, res) => {
+  const { filename } = req.params;
+  res.sendFile(filename, { root: 'uploads/' }); // Assuming the profile pictures are stored in the 'uploads/' directory
 });
 
 module.exports = router;

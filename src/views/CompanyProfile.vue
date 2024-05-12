@@ -143,7 +143,7 @@ export default {
     methods: {
         async fetchCompanyData() {
             try {
-                const response = await fetch('http://localhost:3000/company/profile', {
+                const response = await fetch('http://localhost:3000/routes/cProfile', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export default {
         },
         async saveProfile() {
             try {
-                const response = await fetch('http://localhost:3000/company/profile', {
+                const response = await fetch('http://localhost:3000/routes/cProfile', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
