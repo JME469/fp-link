@@ -6,11 +6,11 @@
       <h2>Inicia sesión</h2>
       <div class="form-group">
         <label for="email">Correo electrónico:</label>
-        <input type="email" id="l-email" v-model="email" required />
+        <input type="email" id="l-email" v-model="lEmail" required />
       </div>
       <div class="form-group">
         <label for="password">Contraseña:</label>
-        <input type="password" id="l-password" v-model="password" required />
+        <input type="password" id="l-password" v-model="lPassword" required />
       </div>
       <button type="submit">Login</button>
       <p v-if="error" class="error">{{ error }}</p>

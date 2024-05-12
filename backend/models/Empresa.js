@@ -21,6 +21,9 @@ const Empresa = sequelize.define('empresa', {
     banner: {
         type: DataTypes.STRING
     },
+    actividad: {
+        type: DataTypes.TEXT
+    },
     description: {
         type: DataTypes.TEXT
     }

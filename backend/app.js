@@ -14,8 +14,8 @@ app.use(cors({
 
 app.options('*', cors());
 
-const registerRoute = require('./routes/register');
-const loginRoute = require('./routes/login');
+const registerRoute = require('./routes/sRegister');
+const loginRoute = require('./routes/sLogin');
 const logoutRoute = require('./routes/logout');
 const companiesRoute = require('./routes/empresas');
 
@@ -24,8 +24,8 @@ const { authenticateUser } = require('./middlewares/authMiddleware');
 app.use(express.json());
 
 // Routes
-app.use('/routes/register', registerRoute);
-app.use('/routes/login', loginRoute);
+app.use('/routes/sRegister', registerRoute);
+app.use('/routes/sLogin', loginRoute);
 app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
 
