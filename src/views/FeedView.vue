@@ -1,6 +1,6 @@
 <template>
     <Header />
-    <div>
+    <div id="feed-body">
         <div id="menu-container">
             <div id="content-wrapper">
                 <ul id="menu">
@@ -34,18 +34,28 @@
         <div class="feed-container">
             <CompanyPostCard v-for="company in companies" :key="company._id" :company="company" />
         </div>
+        <div>
+
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
+#feed-body{
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 0.7fr;
+    height: 100vh;
+    margin-top: 30px;
+}
 #menu-container {
     display: flex;
     align-items: center;
     justify-content: center;
 
+    margin-left: 30px;
     padding: 30px;
-    margin: 30px;
-    min-height: 300px;
+    min-height: 290px;
+    max-height: 320px;
     max-width: 250px;
     background-color: var(--lightGreen);
     box-shadow: var(--boxShadow);
@@ -113,7 +123,7 @@ export default {
     methods: {
         async fetchCompanies() {
             try {
-                const response = await fetch('http://localhost:3000/routes/companies');
+                const response = await fetch('http://localhost:3000/routes/empresas');
                 if (!response.ok) {
                     throw new Error('Failed to fetch companies');
                 }

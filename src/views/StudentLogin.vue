@@ -175,7 +175,7 @@ export default {
         const data = await response.json();
         console.log(data);
         // Redirect user to dashboard or home page upon successful login
-        this.$router.push("/FeedView");
+        this.$router.push("/feed");
       } catch (error) {
         console.error(error.message);
         // Display error message to the user
@@ -203,7 +203,7 @@ export default {
 
         const data = await response.json();
         console.log(data);
-        this.$router.push("/FeedView");
+        this.$router.push("/feed");
         // Redirect to login page or display success message
         console.log("Login successful");
       } catch (error) {
