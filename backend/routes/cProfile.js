@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const { Empresa } = require('../models/Empresa');
+const Empresa = require('../models/Empresa');
 
 const multer = require('multer');
 const storage = multer.diskStorage({

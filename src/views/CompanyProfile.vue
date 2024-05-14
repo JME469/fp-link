@@ -4,6 +4,10 @@
         <div class="profile-left">
             <h2>Company Profile</h2>
             <div>
+                <img :src="company.logo ? 'http://localhost:3000/routes/cProfile/uploads/' + company.logo : '/default-profile-pic.png'"
+                    alt="Profile Picture">
+            </div>
+            <div>
                 <span>{{ company.name }}</span>
             </div>
             <div>
@@ -38,6 +42,11 @@
                 <label>Descripcion:</label>
                 <textarea v-model="company.description"></textarea>
             </div>
+            <div class="field">
+                <label>Profile Picture:</label>
+                <input type="file" @change="handleProfilePicChange">
+            </div>
+            <button @click="logout">Logout</button>
             <!-- Add more fields as needed -->
         </div>
     </div>
@@ -131,6 +140,7 @@ export default {
                 description: '',
                 actividad: '',
                 // Add more fields as needed
+                logo: null, // New property for company logo
             }
         };
     },
@@ -141,6 +151,10 @@ export default {
         this.fetchCompanyData();
     },
     methods: {
+        logout() {
+            localStorage.removeItem("token");
+            this.$router.push("/empresas");
+        },
         async fetchCompanyData() {
             try {
                 const response = await fetch('http://localhost:3000/routes/cProfile', {
@@ -162,13 +176,22 @@ export default {
         },
         async saveProfile() {
             try {
+                // Create FormData object to send form data including profile picture
+                const formData = new FormData();
+                formData.append('name', this.company.name);
+                formData.append('email', this.company.email);
+                formData.append('actividad', this.company.actividad);
+                formData.append('description', this.company.description);
+                // Append profile picture file to FormData if it exists
+                if (this.company.logo) {
+                    formData.append('logo', this.company.logo);
+                }
+                // Send POST request to save company profile
                 const response = await fetch('http://localhost:3000/routes/cProfile', {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Add any necessary authorization headers here
-                    },
-                    body: JSON.stringify(this.company),
+                    // Set 'Content-Type' header to 'multipart/form-data' for FormData
+                    // No need to set other headers, boundary will be generated automatically
+                    body: formData,
                 });
                 if (!response.ok) {
                     throw new Error('Failed to save company profile');
@@ -178,6 +201,10 @@ export default {
                 console.error('Error saving company profile:', error);
                 // Handle error (e.g., display error message)
             }
+        },
+        handleProfilePicChange(event) {
+            // Handle profile picture selection
+            this.company.logo = event.target.files[0];
         },
         truncateDescription(description) {
             const maxLength = 300;

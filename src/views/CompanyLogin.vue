@@ -1,51 +1,51 @@
 <template>
-    <div class="login-container">
-      <form @submit.prevent="login" class="login-form" v-show="showLogin">
-        <h1>FPLink</h1>
-        <h4>- Empresas -</h4>
-        <h2>Inicia sesión</h2>
-        <div class="form-group">
-          <label for="email">Correo electrónico:</label>
-          <input type="email" id="l-email" v-model="lEmail" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña:</label>
-          <input type="password" id="l-password" v-model="lPassword" required />
-        </div>
-        <button type="submit">Login</button>
-        <p v-if="error" class="error">{{ error }}</p>
-        <hr />
-        <p id="noAcc-text">
-          ¿Todavía no tienes una cuenta?<br />
-          Crea una nueva <a @click="toggleDisplay">aquí</a>
-        </p>
-      </form>
-      <form @submit.prevent="registerUser" class="login-form" v-show="showCreate">
-        <h1>FPLink</h1>
-        <h4>- Empresas -</h4>
-        <h2>Crea una cuenta</h2>
-        <div class="form-group">
-          <label for="email">Correo electrónico:</label>
-          <input type="email" id="r-email" v-model="rEmail" required />
-        </div>
-        <div class="form-group">
-          <label for="name">Nombre de usuario:</label>
-          <input type="text" id="name" v-model="name" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña:</label>
-          <input type="password" id="r-password" v-model="rPassword" required />
-        </div>
-        <button type="submit">Crear</button>
-        <p v-if="error" class="error">{{ error }}</p>
-        <hr />
-        <p id="noAcc-text">
-          ¿Ya tienes una cuenta?<br />
-          Inicia sesión <a @click="toggleDisplay">aquí</a>
-        </p>
-      </form>
-    </div>
-  </template>
+  <div class="login-container">
+    <form @submit.prevent="login" class="login-form" v-show="showLogin">
+      <h1>FPLink</h1>
+      <h4>- Empresas -</h4>
+      <h2>Inicia sesión</h2>
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="l-email" v-model="lEmail" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="l-password" v-model="lPassword" required />
+      </div>
+      <button type="submit">Login</button>
+      <p v-if="error" class="error">{{ error }}</p>
+      <hr />
+      <p id="noAcc-text">
+        ¿Todavía no tienes una cuenta?<br />
+        Crea una nueva <a @click="toggleDisplay">aquí</a>
+      </p>
+    </form>
+    <form @submit.prevent="registerUser" class="login-form" v-show="showCreate">
+      <h1>FPLink</h1>
+      <h4>- Empresas -</h4>
+      <h2>Crea una cuenta</h2>
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="r-email" v-model="rEmail" required />
+      </div>
+      <div class="form-group">
+        <label for="name">Nombre de usuario:</label>
+        <input type="text" id="name" v-model="name" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="r-password" v-model="rPassword" required />
+      </div>
+      <button type="submit">Crear</button>
+      <p v-if="error" class="error">{{ error }}</p>
+      <hr />
+      <p id="noAcc-text">
+        ¿Ya tienes una cuenta?<br />
+        Inicia sesión <a @click="toggleDisplay">aquí</a>
+      </p>
+    </form>
+  </div>
+</template>
 
 <style scoped lang="scss">
 @import "@/styles/vars.css";
@@ -104,14 +104,17 @@
       font-family: Montserrat;
     }
   }
+
   button {
     @include button;
     cursor: pointer;
   }
+
   .error {
     color: #910c19;
     margin-top: 10px;
   }
+
   hr {
     position: relative;
     height: 1px;
@@ -121,12 +124,15 @@
     margin-top: 25px;
     margin-bottom: 25px;
   }
+
   p {
     @include font();
+
     a {
       color: var(--miscGreen);
       font-weight: 500;
       cursor: pointer;
+
       &:hover {
         text-decoration: underline;
       }
@@ -157,14 +163,14 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch('http://localhost:3000/routes/login', {
+        const response = await fetch("http://localhost:3000/routes/cLogin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: this.lEmail, // Send email from input field
-            password: this.lPassword, // Send password from input field
+            email: this.lEmail,
+            password: this.lPassword,
           }),
         });
 
@@ -173,19 +179,17 @@ export default {
           throw new Error(data.error);
         }
 
-        const data = await response.json();
-        console.log(data);
-        // Redirect user to dashboard or home page upon successful login
-        this.$router.push("/feed");
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+        this.$router.push("/company-profile");
       } catch (error) {
         console.error(error.message);
-        // Display error message to the user
         this.error = "Correo electrónico o contraseña incorrectos";
       }
     },
     async registerUser() {
       try {
-        const response = await fetch('http://localhost:3000/routes/register', {
+        const response = await fetch("http://localhost:3000/routes/cRegister", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -202,11 +206,9 @@ export default {
           throw new Error(data.error);
         }
 
-        const data = await response.json();
-        console.log(data);
-        this.$router.push("/feed");
-        // Redirect to login page or display success message
-        console.log("Login successful");
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+        this.$router.push("/company-profile");
       } catch (error) {
         console.error(error.message);
         // Display error message to the user

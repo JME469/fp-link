@@ -31,7 +31,8 @@ const routes = [
   {
     path: "/feed",
     name: "feed",
-    component: FeedView, 
+    component: FeedView,
+    meta: { requiresAuth: true }, 
   },
   {
     path: "/contact",
@@ -41,13 +42,31 @@ const routes = [
   {
     path: "/company-profile",
     name: "comp-profile",
-    component: CompanyProfile, 
+    component: CompanyProfile,
+    meta: { requiresAuth: true }, 
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!localStorage.getItem('token')) {
+      if (to.path.includes('company')) {
+        next('/empresas'); // Modify the path according to your company login page route
+      } else if(to.path.includes('feed') || to.path.includes('student')){
+        // If the route is for students and user is not authenticated, redirect to student login/register
+        next('/estudiantes'); // Modify the path according to your student login page route
+      }
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
