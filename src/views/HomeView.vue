@@ -474,6 +474,63 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+@media only screen and (max-width: 1335px){
+  #block5{
+    background-image: none;
+  }
+}
+
+@media only screen and (max-width: 790px){
+  #img-container{
+    display: none;
+  }
+
+  #block2-content{
+    display: flex;
+    flex-direction: column !important;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    .subBlock{
+      width: 80% !important;
+    }
+  }
+
+  #b3-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  #b3-content{
+    align-items: center !important;
+  }
+
+  #b3-images{
+    display: none !important;
+  }
+
+  #block4{
+    width: 100% !important;
+  }
+
+  #b4-img{
+    display: none;
+  }
+
+  #block5{
+    background-image: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #b5-content{
+    left: auto !important;
+    max-width: 60% !important;
+  }
+}
 </style>
 
 <script>
