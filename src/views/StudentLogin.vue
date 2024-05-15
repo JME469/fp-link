@@ -156,7 +156,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch('http://localhost:3000/routes/login', {
+        const response = await fetch('http://localhost:3000/routes/sLogin', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -184,7 +184,7 @@ export default {
     },
     async registerUser() {
       try {
-        const response = await fetch('http://localhost:3000/routes/register', {
+        const response = await fetch('http://localhost:3000/routes/sRegister', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

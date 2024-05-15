@@ -18,7 +18,7 @@ const upload = multer({ storage: storage });
 router.get('/', async (req, res) => {
   try {
     // Fetch company data from the database
-    const companyData = await Empresa.findOne({ where: { id: req.user.id } });
+    const companyData = req.company;
     // Send the company data as JSON response
     res.json({companyData, profilePicFilename: companyData.profilePic});
   } catch (error) {
@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
 // Update company profile
 router.put('/', async (req, res) => {
   try {
-
     let company = await Empresa.findOne({ where: { id: req.user.id } });
     if (!company) {
         return res.status(404).json({ error: 'Company not found' });
