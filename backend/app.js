@@ -18,6 +18,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: sessionStore,
+  cookie: { maxAge: 2 * 60 * 60 * 1000 },
 }));
 
 sessionStore.sync();
@@ -40,7 +41,6 @@ const uploadsRoute = require('./routes/uploads');
 const cProfile = require('./routes/cProfile');
 
 const { authenticateUser } = require('./middlewares/authMiddleware');
-const { authenticateCompany } = require('./middlewares/authCompanyMiddleware');
 
 app.use(express.json());
 
@@ -49,7 +49,7 @@ app.use('/routes/sRegister', registerRoute);
 app.use('/routes/sLogin', loginRoute);
 app.use('/routes/cRegister', cRegisterRoute);
 app.use('/routes/cLogin', cLoginRoute);
-app.use('/routes/cProfile', authenticateCompany, cProfile);
+app.use('/routes/cProfile', authenticateUser, cProfile);
 app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
 app.use('/routes/uploads', uploadsRoute);
