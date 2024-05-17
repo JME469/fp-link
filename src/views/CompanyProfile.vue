@@ -131,6 +131,8 @@
 
 <script>
 import Header from "@/components/headerComponent.vue";
+import axiosInstance from '@/axiosInstance'; // Import axios instance
+
 export default {
     data() {
         return {
@@ -157,18 +159,8 @@ export default {
         },
         async fetchCompanyData() {
             try {
-                const response = await fetch('http://localhost:3000/routes/cProfile', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Add any necessary authorization headers here
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch company data');
-                }
-                const data = await response.json();
-                this.company = data;
+                const response = await axiosInstance.get('/routes/cProfile');
+                this.company = response.data;
             } catch (error) {
                 console.error('Error fetching company data:', error);
                 // Handle error (e.g., display error message)
@@ -187,15 +179,7 @@ export default {
                     formData.append('logo', this.company.logo);
                 }
                 // Send POST request to save company profile
-                const response = await fetch('http://localhost:3000/routes/cProfile', {
-                    method: 'PUT',
-                    // Set 'Content-Type' header to 'multipart/form-data' for FormData
-                    // No need to set other headers, boundary will be generated automatically
-                    body: formData,
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to save company profile');
-                }
+                const response = await axiosInstance.put('/routes/cProfile', formData);
                 // Optionally, update UI or display success message
             } catch (error) {
                 console.error('Error saving company profile:', error);

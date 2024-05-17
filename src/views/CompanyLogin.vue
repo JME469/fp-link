@@ -143,8 +143,10 @@
 
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: "StudentLogin",
+  name: "CompanyLogin",
   data() {
     return {
       rEmail: "",
@@ -163,23 +165,12 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch("http://localhost:3000/routes/cLogin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: this.lEmail,
-            password: this.lPassword,
-          }),
+        const response = await axios.post("http://localhost:3000/routes/cLogin", {
+          email: this.lEmail,
+          password: this.lPassword,
         });
 
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error);
-        }
-
-        const { token } = await response.json();
+        const { token } = response.data;
         localStorage.setItem("token", token);
         this.$router.push("/company-profile");
       } catch (error) {
@@ -189,24 +180,13 @@ export default {
     },
     async registerUser() {
       try {
-        const response = await fetch("http://localhost:3000/routes/cRegister", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: this.name,
-            email: this.rEmail,
-            password: this.rPassword,
-          }),
+        const response = await axios.post("http://localhost:3000/routes/cRegister", {
+          name: this.name,
+          email: this.rEmail,
+          password: this.rPassword,
         });
 
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error);
-        }
-
-        const { token } = await response.json();
+        const { token } = response.data;
         localStorage.setItem("token", token);
         this.$router.push("/company-profile");
       } catch (error) {
