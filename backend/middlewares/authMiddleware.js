@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken');
+const { Estudiante } = require('../models/Estudiante');
+const { Empresa } = require('../models/Empresa');
+
 const authenticateUser = async (req, res, next) => {
     try {
         // Get the authorization header from the request
@@ -5,8 +9,7 @@ const authenticateUser = async (req, res, next) => {
 
         // Check if the authorization header exists
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            // Redirect to student login page if unauthorized
-            return res.redirect('/estudiantes');
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }
 
         // Extract the token from the authorization header
@@ -17,26 +20,20 @@ const authenticateUser = async (req, res, next) => {
 
         // Check if the decoded token contains a user ID
         if (!decoded || !decoded.userId) {
-            // Redirect to student login page if unauthorized
-            return res.redirect('/estudiantes');
+            return res.status(401).json({ error: 'Unauthorized: Invalid token' });
         }
 
         // Fetch the user from the appropriate model based on the route
         let user;
         if (req.path.startsWith('/routes/s')) {
-            user = await Student.findByPk(decoded.userId);
+            user = await Estudiante.findByPk(decoded.userId);
         } else if (req.path.startsWith('/routes/c')) {
             user = await Empresa.findByPk(decoded.userId);
         }
 
         // Check if the user exists
         if (!user) {
-            // Redirect to appropriate login page based on route
-            if (req.path.startsWith('/routes/s')) {
-                return res.redirect('/estudiantes');
-            } else if (req.path.startsWith('/routes/c')) {
-                return res.redirect('/empresas');
-            }
+            return res.status(401).json({ error: 'Unauthorized: User not found' });
         }
 
         // Attach the user object to the request for further use
@@ -51,4 +48,5 @@ const authenticateUser = async (req, res, next) => {
 };
 
 module.exports = { authenticateUser };
+
 
