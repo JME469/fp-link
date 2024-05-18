@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const Empresa = require('../models/Empresa');
 
 
-router.post('/', async (req, res) => {
+router.post('/cRegister', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 

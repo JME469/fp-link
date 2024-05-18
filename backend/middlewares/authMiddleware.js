@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { Estudiante } = require('../models/Estudiante');
-const { Empresa } = require('../models/Empresa');
+const Estudiante = require('../models/Estudiante');
+const Empresa = require('../models/Empresa');
 
 const authenticateUser = async (req, res, next) => {
     try {
@@ -13,7 +13,7 @@ const authenticateUser = async (req, res, next) => {
         }
 
         // Extract the token from the authorization header
-        const token = authHeader.split(' ')[1];
+        const token = authHeader.split(' ')[1]; 
 
         // Verify the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -25,9 +25,9 @@ const authenticateUser = async (req, res, next) => {
 
         // Fetch the user from the appropriate model based on the route
         let user;
-        if (req.path.startsWith('/routes/s')) {
+        if (req.originalUrl.startsWith('/routes/s')) {
             user = await Estudiante.findByPk(decoded.userId);
-        } else if (req.path.startsWith('/routes/c')) {
+        } else if (req.originalUrl.startsWith('/routes/c')) {
             user = await Empresa.findByPk(decoded.userId);
         }
 
@@ -48,5 +48,6 @@ const authenticateUser = async (req, res, next) => {
 };
 
 module.exports = { authenticateUser };
+
 
 

@@ -169,8 +169,8 @@ export default {
           email: this.lEmail,
           password: this.lPassword,
         });
-
-        const { token } = response.data;
+        console.log(response)
+        const token = response.data.token;
         localStorage.setItem("token", token);
         this.$router.push("/company-profile");
       } catch (error) {
@@ -186,7 +186,8 @@ export default {
           password: this.rPassword,
         });
 
-        const { token } = response.data;
+        console.log(response);
+        const token = response.data.token;
         localStorage.setItem("token", token);
         this.$router.push("/company-profile");
       } catch (error) {

@@ -1,53 +1,59 @@
 <template>
     <Header />
     <div class="profile-container">
-        <div class="profile-left">
-            <h2>Company Profile</h2>
-            <div>
-                <img :src="company.logo ? 'http://localhost:3000/routes/cProfile/uploads/' + company.logo : '/default-profile-pic.png'"
-                    alt="Profile Picture">
-            </div>
-            <div>
-                <span>{{ company.name }}</span>
-            </div>
-            <div>
-                <span>{{ company.email }}</span>
-            </div>
-            <div>
-                <span>{{ company.actividad }}</span>
-            </div>
-            <div>
-                <span>{{ truncateDescription(company.description) }}</span>
-            </div>
-            <!-- Add more fields as needed -->
+        <div v-if="loading" class="loading-container">
+            <span id="logo">FPLink</span>
+            <img src="@/assets/icons/plug.png" alt="Loading animation" class="loading-icon">
         </div>
-        <div class="profile-right">
-            <div id="edit-title">
-                <h2>Editar perfil</h2>
-                <button @click="saveProfile">Guardar</button>
+        <div v-else>
+            <div class="profile-left">
+                <h2>Company Profile</h2>
+                <div>
+                    <img :src="company.logo ? 'http://localhost:3000/routes/cProfile/uploads/' + company.logo : '/default-profile-pic.png'"
+                        alt="Profile Picture">
+                </div>
+                <div>
+                    <span>{{ company.name }}</span>
+                </div>
+                <div>
+                    <span>{{ company.email }}</span>
+                </div>
+                <div>
+                    <span>{{ company.actividad }}</span>
+                </div>
+                <div>
+                    <span>{{ truncateDescription(company.description) }}</span>
+                </div>
+                <!-- Add more fields as needed -->
             </div>
-            <div class="field">
-                <label>Nombre:</label>
-                <input type="text" v-model="company.name" />
+            <div class="profile-right">
+                <div id="edit-title">
+                    <h2>Editar perfil</h2>
+                    <button @click="saveProfile">Guardar</button>
+                </div>
+                <div class="field">
+                    <label>Nombre:</label>
+                    <input type="text" v-model="company.name" />
+                </div>
+                <div class="field">
+                    <label>Email:</label>
+                    <input type="email" v-model="company.email" />
+                </div>
+                <div class="field">
+                    <label>Actividad:</label>
+                    <input type="email" v-model="company.email" />
+                </div>
+                <div class="field">
+                    <label>Descripcion:</label>
+                    <textarea v-model="company.description"></textarea>
+                </div>
+                <div class="field">
+                    <label>Profile Picture:</label>
+                    <input type="file" @change="handleProfilePicChange">
+                </div>
+                <button @click="logout">Logout</button>
+                <!-- Add more fields as needed -->
             </div>
-            <div class="field">
-                <label>Email:</label>
-                <input type="email" v-model="company.email" />
-            </div>
-            <div class="field">
-                <label>Actividad:</label>
-                <input type="email" v-model="company.email" />
-            </div>
-            <div class="field">
-                <label>Descripcion:</label>
-                <textarea v-model="company.description"></textarea>
-            </div>
-            <div class="field">
-                <label>Profile Picture:</label>
-                <input type="file" @change="handleProfilePicChange">
-            </div>
-            <button @click="logout">Logout</button>
-            <!-- Add more fields as needed -->
         </div>
     </div>
 </template>
@@ -62,6 +68,37 @@
     margin-top: 30px;
     align-items: center;
     justify-content: center;
+}
+
+#logo {
+    font-family: Syne;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: larger;
+  }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loading-icon {
+    width: 50px;
+    height: 50px;
+    transform: rotate(45deg);
+    animation: spin 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .profile-left {
@@ -143,7 +180,8 @@ export default {
                 actividad: '',
                 // Add more fields as needed
                 logo: null, // New property for company logo
-            }
+            },
+            loading: true,
         };
     },
     components: {
@@ -160,10 +198,12 @@ export default {
         async fetchCompanyData() {
             try {
                 const response = await axiosInstance.get('/routes/cProfile');
-                this.company = response.data;
+                this.company = response.data.companyData;
             } catch (error) {
                 console.error('Error fetching company data:', error);
                 // Handle error (e.g., display error message)
+            } finally {
+                this.loading = false;
             }
         },
         async saveProfile() {
@@ -191,6 +231,7 @@ export default {
             this.company.logo = event.target.files[0];
         },
         truncateDescription(description) {
+            if (!description) return '';
             const maxLength = 300;
             if (description.length > maxLength) {
                 return description.substring(0, maxLength) + '...';

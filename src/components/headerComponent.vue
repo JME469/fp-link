@@ -20,6 +20,7 @@
           <span></span>
         </button>
       </nav>
+      <button v-if="isLoggedIn" @click="logoutUser" class="button">LogOut</button>
     </div>
   </header>
 </template>
@@ -39,7 +40,7 @@
     align-items: center;
     gap: 20px;
 
-    .logo-container{
+    .logo-container {
       text-decoration: none;
       #logo {
         font-family: Syne;
@@ -55,7 +56,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-  
+
       .nav {
         display: flex;
         flex-direction: row;
@@ -65,17 +66,16 @@
         list-style-type: none;
         margin: 0;
         padding: 0;
-  
+
         li {
-  
           &:last-child {
             margin-right: 0;
           }
-  
+
           a {
             @include navItem;
             text-decoration: none;
-  
+
             &:hover {
               text-decoration: underline;
             }
@@ -85,8 +85,7 @@
       .menu-toggle {
         display: none;
         border: none;
-        /* Hide by default */
-  
+
         span {
           display: block;
           width: 25px;
@@ -98,23 +97,23 @@
     }
   }
 }
+.button {
+  @include button();
+}
 @media screen and (max-width: 600px) {
   .nav {
-    display: none;
-    /* Hide nav by default */
-    flex-direction: column;
+    display: none !important;
+    flex-direction: column !important;
     align-items: flex-start;
     width: 100%;
     padding-top: 10px;
- 
+
     .nav-open {
-      display: flex;
-      /* Show nav when isNavOpen is true */
+      display: flex !important;
     }
   }
   .menu-toggle {
-    display: block;
-    /* Show menu toggle button */
+    display: block !important;
     cursor: pointer;
     padding: 10px;
     background-color: transparent;
@@ -132,14 +131,28 @@
 </style>
 
 <script>
+import { logout } from '@/utils/auth';
 export default {
   name: 'Header',
   data() {
     return {
-      isNavOpen: false
+      isNavOpen: false,
+      isLoggedIn: !!localStorage.getItem('token'), // Initialize based on token existence
     };
   },
+  mounted() {
+    this.isLoggedIn = !!localStorage.getItem('token');
+  },
+  watch: {
+    '$route'() {
+      this.isLoggedIn = !!localStorage.getItem('token');
+    }
+  },
   methods: {
+    logoutUser() {
+      logout(this.$router);
+      this.isLoggedIn = false; // Update local state
+    },
     toggleNav() {
       this.isNavOpen = !this.isNavOpen;
     }

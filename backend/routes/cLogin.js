@@ -15,6 +15,7 @@ router.post('/', async (req, res) => {
 
         // Check if user exists
         const user = await Empresa.findOne({ where: { email } });
+        console.log(user)
         if (!user) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
@@ -26,7 +27,7 @@ router.post('/', async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
         // Send success response with token
         res.status(200).json({ message: 'Login successful', token });
