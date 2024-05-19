@@ -1,11 +1,11 @@
 <template>
     <Header />
-    <div class="profile-container">
+    <div class="page-container">
         <div v-if="loading" class="loading-container">
             <span id="logo">FPLink</span>
             <img src="@/assets/icons/plug.png" alt="Loading animation" class="loading-icon">
         </div>
-        <div v-else>
+        <div v-else id="profile-container">
             <div class="profile-left">
                 <h2>Company Profile</h2>
                 <div>
@@ -61,7 +61,15 @@
 <style scoped lang="scss">
 @import '@/styles/_mixins.scss';
 
-.profile-container {
+.page-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+#profile-container {
     display: flex;
     flex-direction: row;
     gap: 20px;
