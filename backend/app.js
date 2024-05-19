@@ -40,6 +40,7 @@ const cLoginRoute = require('./routes/cLogin');
 const uploadsRoute = require('./routes/uploads');
 const cProfile = require('./routes/cProfile');
 const sProfile = require('./routes/sProfile');
+const postRoutes = require('./routes/postRoutes');
 
 const { authenticateUser } = require('./middlewares/authMiddleware');
 
@@ -55,6 +56,7 @@ app.use('/routes/sProfile', authenticateUser, sProfile);
 app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
 app.use('/routes/uploads', uploadsRoute);
+app.use('/routes/postRoute', postRoutes);
 
 // Start the server
 app.listen(PORT, () => {
