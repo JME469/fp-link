@@ -23,7 +23,7 @@ const Post = sequelize.define('Post', {
   }
 }, {
   tableName: 'posts',
-  timestamps: true // Enable timestamps for createdAt and updatedAt fields
+  timestamps: false,
 });
 
 const Empresa = require('./Empresa'); // Assuming this is the path to your Empresa model

@@ -18,16 +18,18 @@ const authenticateUser = async (req, res, next) => {
         // Verify the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+        console.log(decoded)
+
         // Check if the decoded token contains a user ID
         if (!decoded || !decoded.userId) {
             return res.status(401).json({ error: 'Unauthorized: Invalid token' });
         }
-
+        
         // Fetch the user from the appropriate model based on the route
         let user;
         if (req.originalUrl.startsWith('/routes/s')) {
             user = await Estudiante.findByPk(decoded.userId);
-        } else if (req.originalUrl.startsWith('/routes/c')) {
+        } else if (req.originalUrl.startsWith('/routes/c') || req.originalUrl.startsWith('/routes/posts')) {
             user = await Empresa.findByPk(decoded.userId);
         }
 
