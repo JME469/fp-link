@@ -158,7 +158,12 @@ export default {
     methods: {
         async fetchPosts() {
             try {
-                const response = await axios.get('http://localhost:3000/routes/posts');
+                const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+                const response = await axios.get('http://localhost:3000/routes/posts', {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Include Bearer scheme
+                    }
+                });
                 this.posts = response.data;
             } catch (error) {
                 console.error('Error fetching posts:', error);

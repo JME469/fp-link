@@ -7,6 +7,7 @@ import FeedView from "@/views/FeedView.vue";
 import ContactView from "@/views/ContactView.vue";
 import CompanyProfile from "@/views/CompanyProfile.vue";
 import StudentProfile from "@/views/StudentProfile.vue";
+import CompanyFeed from "@/views/CompanyFeed";
 
 const routes = [
   {
@@ -50,6 +51,12 @@ const routes = [
     path: "/student-profile",
     name: "student-profile",
     component: StudentProfile,
+    meta: { requiresAuth: true }, 
+  },
+  {
+    path: "/company-feed",
+    name: "company-feed",
+    component: CompanyFeed,
     meta: { requiresAuth: true }, 
   },
 ];

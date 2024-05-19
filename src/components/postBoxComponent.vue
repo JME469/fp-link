@@ -85,7 +85,13 @@ export default {
                     content: this.content,
                 };
 
-                const response = await axios.post('http://localhost:3000/routes/posts', postData);
+                const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+
+                const response = await axios.post('http://localhost:3000/routes/posts', postData, {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Include Bearer scheme
+                    }
+                });
 
                 if (response.status === 201) {
                     // Post created successfully
