@@ -25,7 +25,7 @@ sessionStore.sync();
 
 app.use(cors({
     origin: 'http://localhost', // Allow requests from this origin
-    methods: ['GET', 'POST'], // Allow only specified methods
+    methods: ['GET', 'POST', 'PUT'], // Allow only specified methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow only specified headers
   }));
 
@@ -39,6 +39,7 @@ const cRegisterRoute = require('./routes/cRegister');
 const cLoginRoute = require('./routes/cLogin');
 const uploadsRoute = require('./routes/uploads');
 const cProfile = require('./routes/cProfile');
+const sProfile = require('./routes/sProfile');
 
 const { authenticateUser } = require('./middlewares/authMiddleware');
 
@@ -50,6 +51,7 @@ app.use('/routes/sLogin', loginRoute);
 app.use('/routes/cRegister', cRegisterRoute);
 app.use('/routes/cLogin', cLoginRoute);
 app.use('/routes/cProfile', authenticateUser, cProfile);
+app.use('/routes/sProfile', authenticateUser, sProfile);
 app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
 app.use('/routes/uploads', uploadsRoute);
