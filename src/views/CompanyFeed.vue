@@ -34,14 +34,15 @@
             </div>
             <div class="feed-container">
                 <PostBox @postCreated="refreshPosts"></PostBox>
+                
+            </div>
+            <div>
                 <div class="post-list">
                     <div v-for="post in posts" :key="post.id" class="post-item">
                         <h3>{{ post.title }}</h3>
                         <p>{{ post.content }}</p>
                     </div>
                 </div>
-            </div>
-            <div>
             </div>
         </div>
     </div>
@@ -111,29 +112,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 
-    .post-list {
-        width: 100%;
-        max-width: 420px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+}
+.post-list {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
-        .post-item {
-            padding: 20px;
-            border-radius: 10px;
-            background-color: var(--white);
-            box-shadow: var(--boxShadow);
-            border: solid 1px var(--lightGray);
-            
-            h3 {
-                margin: 0 0 10px 0;
-            }
+    .post-item {
+        padding: 20px;
+        border-radius: 10px;
+        background-color: var(--lightGreen);
+        box-shadow: var(--boxShadow);
+        
+        h3 {
+            margin: 0 0 10px 0;
+        }
 
-            p {
-                margin: 0;
-            }
+        p {
+            margin: 0;
         }
     }
 }

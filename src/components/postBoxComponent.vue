@@ -13,12 +13,13 @@
 </template>
 
 <style scoped lang="scss">
+@import '@/styles/_mixins.scss';
 .post-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    max-width: 420px;
+    min-width: 350px;
+    max-width: 85%;
 
     padding: 35px;
     border-radius: 15px;
@@ -49,15 +50,11 @@
                     outline: none;
                 }
                 button {
-                    padding: 10px 20px;
-                    background-color: var(--miscGreen);
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
+                    @include button();
                     cursor: pointer;
                     transition: background-color 0.3s;
                     &:hover {
-                        background-color: var(--darkGreen);
+                        background-color: var(--strongGreen);
                     }
                 }
             }
