@@ -6,6 +6,7 @@ import CompanyLogin from "@/views/CompanyLogin.vue";
 import FeedView from "@/views/FeedView.vue";
 import ContactView from "@/views/ContactView.vue";
 import CompanyProfile from "@/views/CompanyProfile.vue";
+import StudentProfile from "@/views/StudentProfile.vue";
 
 const routes = [
   {
@@ -41,8 +42,14 @@ const routes = [
   },
   {
     path: "/company-profile",
-    name: "comp-profile",
+    name: "company-profile",
     component: CompanyProfile,
+    meta: { requiresAuth: true }, 
+  },
+  {
+    path: "/student-profile",
+    name: "student-profile",
+    component: StudentProfile,
     meta: { requiresAuth: true }, 
   },
 ];

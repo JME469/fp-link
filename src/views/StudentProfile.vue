@@ -7,25 +7,25 @@
         </div>
         <div v-else id="profile-container">
             <div class="profile-left">
-                <h2>Tu perfil de empresa</h2>
+                <h2>Tu perfil de estudiante</h2>
                 <div>
-                    <img :src="company.logo ? 'http://localhost:3000/routes/cProfile/uploads/' + company.logo : require('@/assets/icons/default-profile-pic.png')"
+                    <img :src="student.profile_pic ? 'http://localhost:3000/routes/sProfile/uploads/' + student.profile_pic : require('@/assets/icons/default-profile-pic.png')"
                         alt="Profile Picture" class="user-pic">
                 </div>
-                
+
                 <div>
-                    <span>{{ company.name }}</span>
+                    <span>{{ student.name }}</span>
                 </div>
                 <div>
-                    <span>{{ company.email }}</span>
+                    <span>{{ student.email }}</span>
                 </div>
-                
+
                 <div>
-                    <span>{{ company.actividad }}</span>
+                    <span>{{ student.studies_center }}</span>
                 </div>
-                
+
                 <div>
-                    <span id="description">{{ truncateDescription(company.description) }}</span>
+                    <span id="presentation">{{ truncatepresentation(student.presentation) }}</span>
                 </div>
                 <!-- Add more fields as needed -->
             </div>
@@ -36,22 +36,22 @@
                 </div>
                 <div class="field">
                     <label>Nombre:</label>
-                    <input type="text" v-model="company.name" />
+                    <input type="text" v-model="student.name" />
                 </div>
                 <div class="field">
                     <label>Email:</label>
-                    <input type="email" v-model="company.email" />
+                    <input type="email" v-model="student.email" />
                 </div>
                 <div class="field">
-                    <label>Actividad:</label>
-                    <input type="email" v-model="company.actividad" />
+                    <label>Centro de estudios:</label>
+                    <input type="text" v-model="student.studies_center" />
                 </div>
                 <div class="field">
-                    <label>Descripcion:</label>
-                    <textarea v-model="company.description"></textarea>
+                    <label>Presentacion:</label>
+                    <textarea v-model="student.presentation"></textarea>
                 </div>
                 <div class="field">
-                    <label>Logo:</label>
+                    <label>Foto de perfil:</label>
                     <input type="file" @change="handleProfilePicChange">
                 </div>
             </div>
@@ -85,7 +85,13 @@
     font-weight: 800;
     letter-spacing: 2px;
     font-size: larger;
-  }
+}
+
+.user-pic {
+    width: 250px;
+    height: auto;
+    border-radius: 50%;
+}
 
 .loading-container {
     display: flex;
@@ -99,12 +105,6 @@
     height: 50px;
     transform: rotate(45deg);
     animation: spin 2s ease-in-out infinite;
-}
-
-.user-pic{
-    width: 250px;
-    height: auto;
-    border-radius: 50%;
 }
 
 @keyframes spin {
@@ -132,19 +132,19 @@
 
     h2 {}
 
-    hr{
+    hr {
         @include hr();
     }
 
     div {
-        margin: 15px;
+        margin: 10px;
 
         label {
             display: inline-block;
         }
 
         span {
-            #description{
+            #presentation {
                 font-size: smaller;
             }
         }
@@ -171,7 +171,8 @@
             @include button();
             cursor: pointer;
             transition: all 0.25s ease-in-out;
-            &:hover{
+
+            &:hover {
                 padding: 10px 24px 10px 24px;
                 margin: -2px;
             }
@@ -202,24 +203,24 @@
             margin: 10px;
         }
 
-        textarea{
+        textarea {
             min-width: 320px;
             min-height: 130px;
         }
 
-        input[type="file"]{
+        input[type="file"] {
             display: flex;
             flex-direction: column;
         }
     }
 }
 
-@media screen and (max-width: 850px){
-    #profile-container{
+@media screen and (max-width: 850px) {
+    #profile-container {
         flex-direction: column !important;
 
-        .profile-left, 
-        .profile-right{
+        .profile-left,
+        .profile-right {
             min-height: none !important;
             height: auto !important;
             width: 90% !important;
@@ -235,13 +236,13 @@ import axiosInstance from '@/axiosInstance'; // Import axios instance
 export default {
     data() {
         return {
-            company: {
+            student: {
                 name: '',
                 email: '',
-                description: '',
-                actividad: '',
+                presentation: '',
+                studies_center: '',
                 // Add more fields as needed
-                logo: null, // New property for company logo
+                profile_pic: null, // New property for student logo
             },
             loading: true,
         };
@@ -250,19 +251,19 @@ export default {
         Header
     },
     mounted() {
-        this.fetchCompanyData();
+        this.fetchstudentData();
     },
     methods: {
         logout() {
             localStorage.removeItem("token");
-            this.$router.push("/empresas");
+            this.$router.push("/estudiantes");
         },
-        async fetchCompanyData() {
+        async fetchstudentData() {
             try {
-                const response = await axiosInstance.get('/routes/cProfile');
-                this.company = response.data.companyData;
+                const response = await axiosInstance.get('/routes/sProfile');
+                this.student = response.data.studentData;
             } catch (error) {
-                console.error('Error fetching company data:', error);
+                console.error('Error fetching student data:', error);
                 // Handle error (e.g., display error message)
             } finally {
                 this.loading = false;
@@ -272,33 +273,33 @@ export default {
             try {
                 // Create FormData object to send form data including profile picture
                 const formData = new FormData();
-                formData.append('name', this.company.name);
-                formData.append('email', this.company.email);
-                formData.append('actividad', this.company.actividad);
-                formData.append('description', this.company.description);
+                formData.append('name', this.student.name);
+                formData.append('email', this.student.email);
+                formData.append('studies_center', this.student.studies_center);
+                formData.append('presentation', this.student.presentation);
                 // Append profile picture file to FormData if it exists
-                if (this.company.logo) {
-                    formData.append('logo', this.company.logo);
+                if (this.student.logo) {
+                    formData.append('profile_pic', this.student.profile_pic);
                 }
-                // Send POST request to save company profile
-                const response = await axiosInstance.put('/routes/cProfile', formData);
+                // Send POST request to save student profile
+                const response = await axiosInstance.put('/routes/sProfile', formData);
                 // Optionally, update UI or display success message
             } catch (error) {
-                console.error('Error saving company profile:', error);
+                console.error('Error saving student profile:', error);
                 // Handle error (e.g., display error message)
             }
         },
         handleProfilePicChange(event) {
             // Handle profile picture selection
-            this.company.logo = event.target.files[0];
+            this.student.profile_pic = event.target.files[0];
         },
-        truncateDescription(description) {
-            if (!description) return '';
+        truncatepresentation(presentation) {
+            if (!presentation) return '';
             const maxLength = 300;
-            if (description.length > maxLength) {
-                return description.substring(0, maxLength) + '...';
+            if (presentation.length > maxLength) {
+                return presentation.substring(0, maxLength) + '...';
             }
-            return description;
+            return presentation;
         }
     }
 };

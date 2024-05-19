@@ -18,3 +18,11 @@
   font-size: 15px;
 }
 
+@mixin hr(){
+  min-height: 1px;
+  max-height: 1px;
+  background-color: var(--miscGreen);
+  opacity: 0.6;
+  border: none;
+}
+
