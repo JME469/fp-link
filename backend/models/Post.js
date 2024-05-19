@@ -3,7 +3,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config/database.js');
 
-const Post = sequelize.define('post', {
+const Post = sequelize.define('Post', {
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -12,7 +12,15 @@ const Post = sequelize.define('post', {
     type: DataTypes.TEXT,
     allowNull: false
   },
-  image: DataTypes.STRING
+  image: DataTypes.STRING,
+  empresa_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Empresas',
+      key: 'id'
+    }
+  }
 }, {
   tableName: 'posts',
   timestamps: true // Enable timestamps for createdAt and updatedAt fields
@@ -26,4 +34,5 @@ Post.belongsTo(Empresa, {
 });
 
 module.exports = Post;
+
 

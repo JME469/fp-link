@@ -56,7 +56,7 @@ app.use('/routes/sProfile', authenticateUser, sProfile);
 app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
 app.use('/routes/uploads', uploadsRoute);
-app.use('/routes/postRoute', postRoutes);
+app.use('/routes/posts', authenticateUser, postRoutes);
 
 // Start the server
 app.listen(PORT, () => {

@@ -1,9 +1,10 @@
-const Post = require('../models/Post'); 
+const Post = require('../models/Post');
 
 // Controller method to create a new company post
 exports.createPost = async (req, res) => {
   try {
-    const { empresa_id, title, content, image } = req.body;
+    const empresa_id = req.user.id; // Extracted from authenticated user
+    const { title, content, image } = req.body;
     const post = await Post.create({ empresa_id, title, content, image });
     res.status(201).json(post);
   } catch (error) {
@@ -46,7 +47,8 @@ exports.deletePost = async (req, res) => {
 // Controller method to get all company posts
 exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.findAll();
+    const empresa_id = req.user.id; // Extracted from authenticated user
+    const posts = await Post.findAll({ where: { empresa_id } });
     res.json(posts);
   } catch (error) {
     console.error(error);
@@ -68,3 +70,4 @@ exports.getPostById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
