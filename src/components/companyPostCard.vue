@@ -46,7 +46,7 @@ export default {
 
     padding: 35px;
     border-radius: 15px;
-    background-color: var(--lightGreen);
+    background-color: var(--white);
     box-shadow: var(--boxShadow);
     border: solid 2px var(--miscGreen);
 

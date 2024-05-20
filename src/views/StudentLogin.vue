@@ -174,6 +174,8 @@ export default {
 
         const data = await response.json();
         console.log(data);
+        const token = data.token;
+        localStorage.setItem("token", token);
         // Redirect user to dashboard or home page upon successful login
         this.$router.push("/feed");
       } catch (error) {

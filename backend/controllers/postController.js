@@ -48,7 +48,7 @@ exports.deletePost = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     const empresa_id = req.user.id; // Extracted from authenticated user
-    const posts = await Post.findAll({ where: { empresa_id } });
+    const posts = await Post.findAll();
     res.json(posts);
   } catch (error) {
     console.error(error);

@@ -5,7 +5,7 @@
             <div id="content-wrapper">
                 <ul id="menu">
                     <li class="menu-item">
-                        <router-link to="/">
+                        <router-link to="/student-profile">
                             <img src="@/assets/icons/user.png" alt="Profile icon" height="30px">
                             <span>Perfil</span>
                         </router-link>
@@ -32,7 +32,20 @@
             </div>
         </div>
         <div class="feed-container">
-            <CompanyPostCard v-for="company in companies" :key="company._id" :company="company" />
+            <div class="toggle-menu">
+                <button @click="toggleView('posts')">Posts</button>
+                <button @click="toggleView('companies')">Descubre empresas</button>
+            </div>
+            <div v-show="currentFeed === 'posts'">
+                <div v-for="post in posts" :key="post._id" class="post-card">
+                  <!-- Render post content here -->
+                  <h3>{{ post.title }}</h3>
+                  <p>{{ post.content }}</p>
+                </div>
+              </div>
+              <div v-show="currentFeed === 'companies'">
+                <CompanyPostCard v-for="company in companies" :key="company._id" :company="company" />
+              </div>
         </div>
         <div>
 
@@ -100,39 +113,97 @@
         }
     }
 }
+.toggle-menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: var(--lightGreen);
+      color: var(--black);
+      cursor: pointer;
+      font-family: Montserrat;
+      font-weight: 600;
+      box-shadow: var(--boxShadow);
+      border-radius: 5px;
+  
+      &:hover {
+        background-color: var(--strongGreen);
+        color: white;
+      }
+    }
+  }
+  
+  .feed-container {
+    overflow-y: auto;
+    padding: 20px;
+  }
+  
+  .post-card {
+    border: 2px solid var(--miscGreen);
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: var(--boxShadow);
+    border-radius: 5px;
+  }
 </style>
 
 <script>
 import Header from '@/components/headerComponent.vue';
 import CompanyPostCard from '@/components/companyPostCard.vue';
+import axios from 'axios';
 
 export default {
-    name: 'FeedView',
-    data() {
-        return {
-            companies: [],
-        };
+  name: 'FeedView',
+  data() {
+    return {
+      companies: [],
+      posts: [],
+      currentFeed: 'companies', // Default view
+    };
+  },
+  components: {
+    Header,
+    CompanyPostCard,
+  },
+  mounted() {
+    this.fetchCompanies();
+    this.fetchPosts();
+  },
+  methods: {
+    async fetchCompanies() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3000/routes/empresas', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.companies = response.data;
+      } catch (error) {
+        console.error('Error fetching companies:', error);
+      }
     },
-    components: {
-        Header,
-        CompanyPostCard,
+    async fetchPosts() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3000/routes/posts', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log(response);
+        this.posts = response.data;
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
     },
-    mounted() {
-        this.fetchCompanies();
+    toggleView(view) {
+      this.currentFeed = view;
     },
-    methods: {
-        async fetchCompanies() {
-            try {
-                const response = await fetch('http://localhost:3000/routes/empresas');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch companies');
-                }
-                const data = await response.json();
-                this.companies = data;
-            } catch (error) {
-                console.error('Error fetching companies:', error);
-            }
-        },
-    }
-}
+  },
+};
 </script>
