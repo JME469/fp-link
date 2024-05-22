@@ -263,7 +263,6 @@ export default {
                 this.company = response.data.companyData;
             } catch (error) {
                 console.error('Error fetching company data:', error);
-                // Handle error (e.g., display error message)
             } finally {
                 this.loading = false;
             }

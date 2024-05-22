@@ -1,17 +1,17 @@
-// src/axiosInstance.js
+// /src/axiosInstance.js
 import axios from 'axios';
 
-// Create an axios instance with default configurations
+// Configuración instancia axios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000', // Base URL for your API
+  baseURL: 'http://localhost:3000', // URL Base a utilizar para la API
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-// Request interceptor to add the authorization token to headers
+// Interceptor para añadir tokens de autorización a los headers
 axiosInstance.interceptors.request.use(config => {
-  const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+  const token = localStorage.getItem('token'); 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -20,10 +20,9 @@ axiosInstance.interceptors.request.use(config => {
   return Promise.reject(error);
 });
 
-// Response interceptor to handle 401 errors
+// Interceptor para manejar errores de falta de autorización (401) en las respuestas
 axiosInstance.interceptors.response.use(response => response, error => {
   if (error.response && error.response.status === 401) {
-    // Handle unauthorized access globally
     if (window.location.pathname.startsWith('/feed')) {
       window.location.href = '/estudiantes';
     } else if (window.location.pathname.startsWith('/company-profile')) {

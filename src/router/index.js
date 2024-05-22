@@ -68,12 +68,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Comprobar la existencia de token de autenticación en el navegador
     if (!localStorage.getItem('token')) {
       if (to.path.includes('company')) {
-        next('/empresas'); // Modify the path according to your company login page route
+        next('/empresas'); // Redirección a login empresas
       } else if(to.path.includes('feed') || to.path.includes('student')){
-        // If the route is for students and user is not authenticated, redirect to student login/register
-        next('/estudiantes'); // Modify the path according to your student login page route
+        // Redirección a login estudiantes
+        next('/estudiantes'); 
       }
     } else {
       next();
