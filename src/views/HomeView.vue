@@ -50,7 +50,7 @@
           <h3>Búsqueda simplificada</h3>
           <p>Haz uso del sistema de filtrado de búsqueda para encontrar las opciones que mejor se adaptan a tí.
 
-            Busca por localización, intereses, actividad, y mucho más</p>
+            Busca por localización, intereses, rama, y mucho más</p>
         </div>
       </div>
     </div>

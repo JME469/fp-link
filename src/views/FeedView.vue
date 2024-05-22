@@ -162,7 +162,8 @@ export default {
     return {
       companies: [],
       posts: [],
-      currentFeed: 'companies', // Default view
+      currentFeed: 'companies',
+      ramaOptions: [],
     };
   },
   components: {
@@ -199,6 +200,14 @@ export default {
         this.posts = response.data;
       } catch (error) {
         console.error('Error fetching posts:', error);
+      }
+    },
+    async fetchRamaOptions() {
+      try {
+        const response = await axios.get('http://localhost:3000/routes/ramas');
+        this.ramaOptions = response.data;
+      } catch (error) {
+        console.error('Error fetching rama options:', error);
       }
     },
     toggleView(view) {

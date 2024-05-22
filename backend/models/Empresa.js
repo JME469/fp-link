@@ -21,9 +21,20 @@ const Empresa = sequelize.define('empresa', {
     banner: {
         type: DataTypes.STRING
     },
-    actividad: {
-        type: DataTypes.TEXT
-    },
+    rama: {
+        type: Sequelize.ENUM,
+        values: [
+          'DAW',
+          'DAM',
+          'ASIR',
+          'Administración y finanzas',
+          'Comercio internacional',
+          'Marketing',
+          'Transporte y logística',
+          // otras ramas que desees agregar
+        ],
+        allowNull: true,
+      },
     description: {
         type: DataTypes.TEXT
     }

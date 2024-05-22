@@ -12,18 +12,18 @@
                     <img :src="company.logo ? 'http://localhost:3000/routes/cProfile/uploads/' + company.logo : require('@/assets/icons/default-profile-pic.png')"
                         alt="Profile Picture" class="user-pic">
                 </div>
-                
+
                 <div>
                     <span>{{ company.name }}</span>
                 </div>
                 <div>
                     <span>{{ company.email }}</span>
                 </div>
-                
+
                 <div>
-                    <span>{{ company.actividad }}</span>
+                    <span>{{ company.rama }}</span>
                 </div>
-                
+
                 <div>
                     <span id="description">{{ truncateDescription(company.description) }}</span>
                 </div>
@@ -43,9 +43,12 @@
                     <input type="email" v-model="company.email" />
                 </div>
                 <div class="field">
-                    <label>Actividad:</label>
-                    <input type="email" v-model="company.actividad" />
-                </div>
+                    <label for="rama">Rama</label>
+                    <select v-model="empresa.rama">
+                      <option value="">Seleccione una rama (opcional)</option>
+                      <option v-for="rama in ramaOptions" :key="rama" :value="rama">{{ rama }}</option>
+                    </select>
+                  </div>
                 <div class="field">
                     <label>Descripcion:</label>
                     <textarea v-model="company.description"></textarea>
@@ -85,7 +88,7 @@
     font-weight: 800;
     letter-spacing: 2px;
     font-size: larger;
-  }
+}
 
 .loading-container {
     display: flex;
@@ -101,7 +104,7 @@
     animation: spin 2s ease-in-out infinite;
 }
 
-.user-pic{
+.user-pic {
     width: 150px;
     height: auto;
     border-radius: 50%;
@@ -132,7 +135,7 @@
 
     h2 {}
 
-    hr{
+    hr {
         @include hr();
     }
 
@@ -144,7 +147,7 @@
         }
 
         span {
-            #description{
+            #description {
                 font-size: smaller;
             }
         }
@@ -171,7 +174,8 @@
             @include button();
             cursor: pointer;
             transition: all 0.25s ease-in-out;
-            &:hover{
+
+            &:hover {
                 padding: 10px 24px 10px 24px;
                 margin: -2px;
             }
@@ -202,24 +206,24 @@
             margin: 10px;
         }
 
-        textarea{
+        textarea {
             min-width: 320px;
             min-height: 130px;
         }
 
-        input[type="file"]{
+        input[type="file"] {
             display: flex;
             flex-direction: column;
         }
     }
 }
 
-@media screen and (max-width: 850px){
-    #profile-container{
+@media screen and (max-width: 850px) {
+    #profile-container {
         flex-direction: column !important;
 
-        .profile-left, 
-        .profile-right{
+        .profile-left,
+        .profile-right {
             min-height: none !important;
             height: auto !important;
             width: 90% !important;
@@ -239,11 +243,12 @@ export default {
                 name: '',
                 email: '',
                 description: '',
-                actividad: '',
+                rama: '',
                 // Add more fields as needed
                 logo: null, // New property for company logo
             },
             loading: true,
+            ramaOptions: [],
         };
     },
     components: {
@@ -267,13 +272,21 @@ export default {
                 this.loading = false;
             }
         },
+        async fetchRamaOptions() {
+            try {
+                const response = await axios.get('http://localhost:3000/routes/ramas');
+                this.ramaOptions = response.data;
+            } catch (error) {
+                console.error('Error fetching rama options:', error);
+            }
+        },
         async saveProfile() {
             try {
                 // Create FormData object to send form data including profile picture
                 const formData = new FormData();
                 formData.append('name', this.company.name);
                 formData.append('email', this.company.email);
-                formData.append('actividad', this.company.actividad);
+                formData.append('rama', this.company.rama);
                 formData.append('description', this.company.description);
                 // Append profile picture file to FormData if it exists
                 if (this.company.logo) {

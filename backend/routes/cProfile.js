@@ -47,12 +47,12 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
   try {
     let company = req.company;
-    const { name, email, logo, banner, actividad, description } = req.body;
+    const { name, email, logo, banner, rama, description } = req.body;
     company.name = name || company.name;
     company.email = email || company.email;
     company.logo = logo || company.logo;
     company.banner = banner || company.banner;
-    company.actividad = actividad || company.actividad;
+    company.rama = rama || company.rama;
     company.description = description || company.description;
 
     // Save the updated company data
