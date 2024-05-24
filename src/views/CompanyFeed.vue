@@ -140,6 +140,7 @@
 </style>
 
 <script>
+import RamaSelect from '@/components/ramaSelect.vue';
 import Header from '@/components/headerComponent.vue';
 import PostBox from '@/components/postBoxComponent.vue';
 import axios from 'axios';
@@ -154,6 +155,7 @@ export default {
     components: {
         Header,
         PostBox,
+        RamaSelect,
     },
     methods: {
         async fetchPosts() {

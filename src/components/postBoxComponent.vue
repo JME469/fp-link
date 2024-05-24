@@ -5,6 +5,7 @@
                 <div class="post-form">
                     <input type="text" v-model="title" placeholder="Title" />
                     <textarea v-model="content" placeholder="Content"></textarea>
+                    <RamaSelect/>
                     <button @click="submitPost">Submit</button>
                 </div>
             </div>
@@ -65,6 +66,7 @@
 
 <script>
 import axios from 'axios';
+import RamaSelect from './ramaSelect.vue';
 
 export default {
     name: 'PostBox',
@@ -73,6 +75,9 @@ export default {
             title: '',
             content: '',
         };
+    },
+    components: {
+        RamaSelect,
     },
     methods: {
         async submitPost() {

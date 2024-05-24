@@ -44,7 +44,7 @@
                 </div>
                 <div class="field">
                     <label for="rama">Rama</label>
-                    <select v-model="empresa.rama">
+                    <select v-model="company.rama">
                       <option value="">Seleccione una rama (opcional)</option>
                       <option v-for="rama in ramaOptions" :key="rama" :value="rama">{{ rama }}</option>
                     </select>
@@ -256,6 +256,7 @@ export default {
     },
     mounted() {
         this.fetchCompanyData();
+        this.fetchRamaOptions();
     },
     methods: {
         logout() {
@@ -274,7 +275,7 @@ export default {
         },
         async fetchRamaOptions() {
             try {
-                const response = await axios.get('http://localhost:3000/routes/ramas');
+                const response = await axiosInstance.get('/routes/ramas');
                 this.ramaOptions = response.data;
             } catch (error) {
                 console.error('Error fetching rama options:', error);

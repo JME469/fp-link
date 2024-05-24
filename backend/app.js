@@ -41,6 +41,7 @@ const uploadsRoute = require('./routes/uploads');
 const cProfile = require('./routes/cProfile');
 const sProfile = require('./routes/sProfile');
 const postRoutes = require('./routes/postRoutes');
+const ramas = require('./routes/ramas');
 
 const { authenticateUser } = require('./middlewares/authMiddleware');
 
@@ -57,6 +58,7 @@ app.use('/routes/logout', authenticateUser, logoutRoute);
 app.use('/routes/empresas', companiesRoute);
 app.use('/routes/uploads', uploadsRoute);
 app.use('/routes/posts', authenticateUser, postRoutes);
+app.use('/routes/ramas', ramas);
 
 // Start the server
 app.listen(PORT, () => {
