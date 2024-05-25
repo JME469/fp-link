@@ -30,7 +30,7 @@
       </div>
       <div class="form-group">
         <label for="name">Nombre de usuario:</label>
-        <input type="text" id="name" v-model="name" required />
+        <input type="text" id="name" v-model="username" required />
       </div>
       <div class="form-group">
         <label for="password">Contraseña:</label>
@@ -181,7 +181,7 @@ export default {
     async registerUser() {
       try {
         const response = await axios.post("http://localhost:3000/routes/cRegister", {
-          name: this.name,
+          name: this.username,
           email: this.rEmail,
           password: this.rPassword,
         });
