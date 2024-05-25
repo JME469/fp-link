@@ -7,7 +7,8 @@ import FeedView from "@/views/FeedView.vue";
 import ContactView from "@/views/ContactView.vue";
 import CompanyProfile from "@/views/CompanyProfile.vue";
 import StudentProfile from "@/views/StudentProfile.vue";
-import CompanyFeed from "@/views/CompanyFeed";
+import CompanyFeed from "@/views/CompanyFeed.vue";
+import construction from "@/views/construction.vue"
 
 const routes = [
   {
@@ -58,6 +59,11 @@ const routes = [
     name: "company-feed",
     component: CompanyFeed,
     meta: { requiresAuth: true }, 
+  },
+  {
+    path: "/construction",
+    name: "construction",
+    component: construction, 
   },
 ];
 

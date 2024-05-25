@@ -6,25 +6,25 @@
                 <div id="content-wrapper">
                     <ul id="menu">
                         <li class="menu-item">
-                            <router-link to="/">
+                            <router-link to="/company-profile">
                                 <img src="@/assets/icons/user.png" alt="Profile icon" height="30px">
                                 <span>Perfil</span>
                             </router-link>
                         </li>
                         <li class="menu-item">
-                            <router-link to="/">
+                            <router-link to="/construction">
                                 <img src="@/assets/icons/notifications.png" alt="Notifications icon" height="30px">
                                 <span>Notificaciones</span>
                             </router-link>
                         </li>
                         <li class="menu-item">
-                            <router-link to="/">
+                            <router-link to="/construction">
                                 <img src="@/assets/icons/chat.png" alt="Chat icon" height="30px">
                                 <span>Mensajes</span>
                             </router-link>
                         </li>
                         <li class="menu-item">
-                            <router-link to="/">
+                            <router-link to="/construction">
                                 <img src="@/assets/icons/settings.png" alt="Settings icon" height="30px">
                                 <span>Preferencias</span>
                             </router-link>
@@ -33,11 +33,12 @@
                 </div>
             </div>
             <div class="feed-container">
+                <div id="feed-title">Publica una oferta</div>
                 <PostBox @postCreated="refreshPosts"></PostBox>
-                
             </div>
             <div>
                 <div class="post-list">
+                    <div id="posts-title">Tus ofertas</div>
                     <div v-for="post in posts" :key="post.id" class="post-item">
                         <h3>{{ post.title }}</h3>
                         <p>{{ post.content }}</p>
@@ -113,6 +114,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
+    #feed-title{
+        margin: 10px;
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: large;
+    }
 
 }
 .post-list {
@@ -121,6 +128,15 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-height: 700px;
+    overflow-y: scroll;
+
+    #posts-title{
+        margin: 10px;
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: large;
+    }
 
     .post-item {
         padding: 20px;

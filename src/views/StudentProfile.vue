@@ -1,5 +1,6 @@
 <template>
     <Header />
+    <span id="return"><router-link to="/student-feed">< Ir al feed</router-link></span>
     <div class="page-container">
         <div v-if="loading" class="loading-container">
             <span id="logo">FPLink</span>
@@ -62,6 +63,26 @@
 <style scoped lang="scss">
 @import '@/styles/_mixins.scss';
 
+#return{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-top: 60px;
+    a{
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: large;
+        margin-left: 40px;
+        text-decoration: none;
+        color: var(--black);
+        transition: all 0.3s ease-in-out;
+        &:hover{
+            color: var(--strongGreen);
+            text-decoration: underline;
+        }
+    }
+}
 .page-container {
     display: flex;
     flex-direction: row;

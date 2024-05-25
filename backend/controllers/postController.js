@@ -4,8 +4,8 @@ const Post = require('../models/Post');
 exports.createPost = async (req, res) => {
   try {
     const empresa_id = req.user.id; // Extracted from authenticated user
-    const { title, content, image } = req.body;
-    const post = await Post.create({ empresa_id, title, content, image });
+    const { title, content, rama, image } = req.body;
+    const post = await Post.create({ empresa_id, title, content, rama, image });
     res.status(201).json(post);
   } catch (error) {
     console.error(error);
@@ -17,8 +17,8 @@ exports.createPost = async (req, res) => {
 exports.updatePost = async (req, res) => {
   try {
     const postId = req.params.postId;
-    const { title, content, image } = req.body;
-    const [updatedRowsCount, updatedRows] = await Post.update({ title, content, image }, { where: { id: postId }, returning: true });
+    const { title, content, rama, image } = req.body;
+    const [updatedRowsCount, updatedRows] = await Post.update({ title, content, rama, image }, { where: { id: postId }, returning: true });
     if (updatedRowsCount === 0) {
       return res.status(404).json({ message: 'Post not found' });
     }

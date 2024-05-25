@@ -172,7 +172,7 @@ export default {
         console.log(response)
         const token = response.data.token;
         localStorage.setItem("token", token);
-        this.$router.push("/company-profile");
+        this.$router.push("/company-feed");
       } catch (error) {
         console.error(error.message);
         this.error = "Correo electrónico o contraseña incorrectos";

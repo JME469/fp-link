@@ -11,19 +11,19 @@
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/">
+            <router-link to="/construction">
               <img src="@/assets/icons/notifications.png" alt="Notifications icon" height="30px" />
               <span>Notificaciones</span>
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/">
+            <router-link to="/construction">
               <img src="@/assets/icons/chat.png" alt="Chat icon" height="30px" />
               <span>Mensajes</span>
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/">
+            <router-link to="/construction">
               <img src="@/assets/icons/settings.png" alt="Settings icon" height="30px" />
               <span>Preferencias</span>
             </router-link>
@@ -33,14 +33,19 @@
     </div>
     <div class="feed-container">
       <div class="toggle-menu">
-        <button @click="toggleView('posts')" :class="{'selected': currentFeed == 'posts'}">Ofertas</button>
-        <button @click="toggleView('companies')" :class="{'selected': currentFeed == 'companies'}">Descubre empresas</button>
+        <button @click="toggleView('posts')" :class="{ 'selected': currentFeed == 'posts' }">Ofertas</button>
+        <button @click="toggleView('companies')" :class="{ 'selected': currentFeed == 'companies' }">Descubre
+          empresas</button>
       </div>
       <div v-show="currentFeed === 'posts'">
-        <div v-for="post in posts" :key="post._id" class="post-card">
-          <!-- Render post content here -->
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.content }}</p>
+        <div v-for="post in filteredPosts" :key="post._id" class="post-card">
+          <div class="post-content-wrapper">
+            <div class="post-title-container">
+              <h3>{{ post.title }}</h3> | 
+              <h4>{{ getCompanyName(post.empresa_id) }}</h4>
+            </div>
+            <p>{{ post.content }}</p>
+          </div>
         </div>
       </div>
       <div v-show="currentFeed === 'companies'">
@@ -49,6 +54,7 @@
     </div>
     <div id="filters-container">
       <h3>Filtros</h3><br>
+      <hr><br>
       <div id="filters-wrapper">
         <div id="rama-filter" class="filters-item">
           <label for="rama">Filtra por rama</label>
@@ -59,6 +65,7 @@
             </option>
           </select>
         </div>
+                
       </div>
     </div>
   </div>
@@ -67,9 +74,39 @@
 <style lang="scss" scoped>
 #feed-body {
   display: grid;
-  grid-template-columns: 0.7fr 1fr 0.7fr;
+  grid-template-columns: 0.5fr 1fr 0.7fr;
   height: 100vh;
   margin-top: 30px;
+}
+
+hr {
+  background-color: #71caba;
+  height: 2px;
+  width: 55%;
+  border: none;
+  align-self: center;
+}
+
+.post-card {
+  border: 2px solid var(--miscGreen);
+  padding: 35px;
+  margin-bottom: 15px;
+  box-shadow: var(--boxShadow);
+  border-radius: 15px;
+  max-width: 420px;
+  background-color: var(--white);
+}
+
+.post-title-container{
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  h4{
+    font-size: smaller;
+  }
 }
 
 #filters-container {
@@ -81,12 +118,12 @@
   align-items: center;
   box-shadow: var(--boxShadow);
 
-  h3{
+  h3 {
     font-family: Poppins;
     font-weight: 600;
   }
 
-  .selected{
+  .selected {
     background-color: var(--strongGreen) !important;
   }
 
@@ -97,21 +134,22 @@
     align-items: center;
     justify-content: center;
 
-    .filters-item{
+    .filters-item {
       padding: 5px;
       margin-top: 15px;
     }
 
-    #rama-filter{
+    #rama-filter {
       display: flex;
       flex-direction: column;
       gap: 5px;
 
-      label{
+      label {
         width: 100%;
         text-align: left;
       }
-      select{
+
+      select {
         padding: 5px;
         background-color: white;
         border-radius: 5px;
@@ -180,7 +218,7 @@
   gap: 20px;
   margin-bottom: 20px;
 
-  .selected{
+  .selected {
     background-color: var(--strongGreen) !important;
     color: var(--white);
   }
@@ -208,12 +246,30 @@
   padding: 20px;
 }
 
-.post-card {
-  border: 2px solid var(--miscGreen);
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: var(--boxShadow);
-  border-radius: 5px;
+@media only screen and (max-width: 890px){
+  #menu-container{
+    display: none;
+  }
+
+  #feed-body {
+    grid-template-columns: 1fr 0.5fr;
+    margin-top: 30px;
+  }
+}
+
+@media only screen and (max-width: 650px){
+  #menu-container{
+    display: none;
+  }
+
+  #feed-body {
+    grid-template-columns: 1fr 0.5fr;
+    margin-top: 30px;
+  }
+
+  #filters-container {
+    display: none;
+  }
 }
 </style>
 
@@ -248,6 +304,12 @@ export default {
         return this.companies.filter(company => company.rama == this.ramaFilter);
       }
       return this.companies;
+    },
+    filteredPosts(){
+      if (this.ramaFilter) {
+        return this.posts.filter(post => post.rama == this.ramaFilter);
+      }
+      return this.posts;
     }
   },
   methods: {
@@ -263,6 +325,7 @@ export default {
           }
         );
         this.companies = response.data;
+        console.log("Companies: ", this.companies);
       } catch (error) {
         console.error("Error fetching companies:", error);
       }
@@ -288,6 +351,10 @@ export default {
       } catch (error) {
         console.error("Error fetching rama options:", error);
       }
+    },
+    getCompanyName(companyId){
+      const company = this.companies.find((company) => company.id === companyId);
+      return company.name;
     },
     toggleView(view) {
       this.currentFeed = view;

@@ -12,6 +12,19 @@ const Post = sequelize.define('Post', {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  rama: {
+    type: Sequelize.ENUM,
+    values: [
+      'DAW',
+      'DAM',
+      'ASIR',
+      'Administración y finanzas',
+      'Comercio internacional',
+      'Marketing',
+      'Transporte y logística',
+    ],
+    allowNull: true,
+  },
   image: DataTypes.STRING,
   empresa_id: {
     type: DataTypes.INTEGER,
