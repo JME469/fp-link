@@ -7,25 +7,25 @@
                     <ul id="menu">
                         <li class="menu-item">
                             <router-link to="/company-profile">
-                                <img src="@/assets/icons/user.png" alt="Profile icon" height="30px">
+                                <img src="@/assets/icons/user.png" alt="Profile icon" height="30px" />
                                 <span>Perfil</span>
                             </router-link>
                         </li>
                         <li class="menu-item">
                             <router-link to="/construction">
-                                <img src="@/assets/icons/notifications.png" alt="Notifications icon" height="30px">
+                                <img src="@/assets/icons/notifications.png" alt="Notifications icon" height="30px" />
                                 <span>Notificaciones</span>
                             </router-link>
                         </li>
                         <li class="menu-item">
                             <router-link to="/construction">
-                                <img src="@/assets/icons/chat.png" alt="Chat icon" height="30px">
+                                <img src="@/assets/icons/chat.png" alt="Chat icon" height="30px" />
                                 <span>Mensajes</span>
                             </router-link>
                         </li>
                         <li class="menu-item">
                             <router-link to="/construction">
-                                <img src="@/assets/icons/settings.png" alt="Settings icon" height="30px">
+                                <img src="@/assets/icons/settings.png" alt="Settings icon" height="30px" />
                                 <span>Preferencias</span>
                             </router-link>
                         </li>
@@ -40,6 +40,9 @@
                 <div class="post-list">
                     <div id="posts-title">Tus ofertas</div>
                     <div v-for="post in posts" :key="post.id" class="post-item">
+                        <div class="borrar">
+                            <div class="boton" @click="confirmDeletePost(post.id)">Borrar</div>
+                        </div>
                         <h3>{{ post.title }}</h3>
                         <p>{{ post.content }}</p>
                     </div>
@@ -56,6 +59,7 @@
     height: 100vh;
     margin-top: 30px;
 }
+
 #menu-container {
     display: flex;
     align-items: center;
@@ -105,23 +109,24 @@
                     text-decoration: underline;
                 }
             }
-
         }
     }
 }
+
 .feed-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    #feed-title{
+
+    #feed-title {
         margin: 10px;
         font-family: Poppins;
         font-weight: 600;
         font-size: large;
     }
-
 }
+
 .post-list {
     width: 100%;
     max-width: 420px;
@@ -131,7 +136,7 @@
     max-height: 700px;
     overflow-y: scroll;
 
-    #posts-title{
+    #posts-title {
         margin: 10px;
         font-family: Poppins;
         font-weight: 600;
@@ -143,7 +148,22 @@
         border-radius: 10px;
         background-color: var(--lightGreen);
         box-shadow: var(--boxShadow);
-        
+
+        .borrar {
+            width: 100%;
+            display: flex;
+            justify-content: right;
+
+            .boton {
+                cursor: pointer;
+                font-size: smaller;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
         h3 {
             margin: 0 0 10px 0;
         }
@@ -156,13 +176,13 @@
 </style>
 
 <script>
-import RamaSelect from '@/components/ramaSelect.vue';
-import Header from '@/components/headerComponent.vue';
-import PostBox from '@/components/postBoxComponent.vue';
-import axios from 'axios';
+import RamaSelect from "@/components/ramaSelect.vue";
+import Header from "@/components/headerComponent.vue";
+import PostBox from "@/components/postBoxComponent.vue";
+import axios from "axios";
 
 export default {
-    name: 'CompanyFeed',
+    name: "CompanyFeed",
     data() {
         return {
             posts: [],
@@ -176,23 +196,41 @@ export default {
     methods: {
         async fetchPosts() {
             try {
-                const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
-                const response = await axios.get('http://localhost:3000/routes/posts', {
+                const token = localStorage.getItem("token");
+                const response = await axios.get("http://localhost:3000/routes/posts", {
                     headers: {
-                        Authorization: `Bearer ${token}` // Include Bearer scheme
-                    }
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 this.posts = response.data;
             } catch (error) {
-                console.error('Error fetching posts:', error);
+                console.error("Error fetching posts:", error);
+            }
+        },
+        confirmDeletePost(postId) {
+            if (confirm('¿Estás seguro de que deseas borrar este post?')) {
+                this.borrarPost(postId);
+            }
+        },
+        async borrarPost(postId) {
+            try {
+                const token = localStorage.getItem("token");
+                await axios.delete(`http://localhost:3000/routes/posts/${postId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                this.refreshPosts();
+            } catch (error) {
+                console.error("Error deleting post:", error);
             }
         },
         refreshPosts() {
             this.fetchPosts();
-        }
+        },
     },
     mounted() {
         this.fetchPosts();
-    }
-}
+    },
+};
 </script>

@@ -25,7 +25,7 @@ sessionStore.sync();
 
 app.use(cors({
     origin: 'http://localhost', // Allow requests from this origin
-    methods: ['GET', 'POST', 'PUT'], // Allow only specified methods
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow only specified methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow only specified headers
   }));
 
