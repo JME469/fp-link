@@ -19,7 +19,6 @@
           <h1>Conecta con tu futura FCT</h1>
           <p>Encuentra la empresa ideal para realizar tus prácticas profesionales. Crea tu perfil y destaca tus
             habilidades para conseguir tu Formación en Centros de Trabajo.</p>
-          <button>Comienza ya</button>
         </div>
         <div id="img-container">
           <img src="@/assets/pexels-fauxels-3183150.jpeg" alt="">
@@ -98,7 +97,6 @@
         <h3>Maximiza tu Formación Profesional</h3>
         <p>No pierdas la oportunidad de potenciar tu aprendizaje. Regístrate ahora y encuentra tu lugar en el mundo
           laboral.</p>
-        <button>Comienza ya</button>
       </div>
     </div>
   </div>

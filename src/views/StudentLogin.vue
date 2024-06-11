@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <router-link to="/" id="home">< Inicio</router-link>
     <form @submit.prevent="login" class="login-form" v-show="showLogin">
       <h1>FPLink</h1>
       <h4>- Estudiantes -</h4>
@@ -53,6 +54,12 @@
 
 @mixin font() {
   font-family: Poppins;
+}
+
+#home{
+  position: absolute;
+  left: 20px;
+  top: 20px;
 }
 
 .login-container {
